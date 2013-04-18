@@ -30,12 +30,12 @@ public class FileService {
         this.fileWriterFormat = fileWriterFormat;
     }
     
-    public void writeFile(List objects) throws IOException {
-        getFileWriter().writeFile(getFileWriterFormat().encode(objects));
+    public void writeFile(List objects, boolean append) throws IOException {
+        getFileWriter().writeFile(getFileWriterFormat().encode(objects, append));
     }
     
-    public List readFile() throws IOException {
-        return getFileReaderFormat().decode(getFileReader().readFile());
+    public List readFile(boolean append) throws IOException {
+        return getFileReaderFormat().decode(getFileReader().readFile(), append);
     }
 
     public void setAppend(boolean append) {

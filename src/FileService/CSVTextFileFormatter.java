@@ -1,7 +1,11 @@
 package FileService;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -17,53 +21,32 @@ public class CSVTextFileFormatter implements FileFormatStrategy {
     }
     
     @Override
-    public String encode(List lines) {
-        
-        StringBuilder sb = new StringBuilder(); 
-        List<String> encodedLines = new ArrayList<String>();
-//
-//        for (Object l : lines) {
-//            sb.append(l).append(ROW_DELIMITER);
-//            encodedLines.add(sb.toString());
-//          
-//        }
-//        
-//        return encodedLines;
-
-//        for (String[] line : lines) {
-//            sb = new StringBuilder();
-//            for (int i = 0; i < line.length; i++) {
-//                sb.append(line[i]);
-//                if (i == line.length - 1) {
-//                    sb.append(ROW_DELIMITER);
-//                } else {
-//                    sb.append(colDelimiter);
-//                }
-//            }
-//            encodedLines.add(sb.toString());
-//        }
-            for(int i = 0; i < lines.size(); i++) {
-            if (i == lines.size() - 1) {
-                sb.append((lines.get(i))).append(ROW_DELIMITER);
-            } else {
-                sb.append(lines.get(i)).append(colDelimiter);
-            }
+    public String encode(List<LinkedHashMap<String, String>> lines, boolean hasHeader) {
+        /*
+         * 1. retrieve keyset of keys (Header values) hasHeader = true
+         * 2. Loop through the list and retrieve each map as a seperate record
+         * 3. Ask for values collection (our data)
+         * 4. Loop through value collection, add to a string followed by a coma
+         */
+        StringBuilder sb = new StringBuilder();
+        Set keys = null;
+        if(hasHeader) {
+            keys = lines.get(ZERO).keySet();
         }
+        for(int i = 0; i < lines.size(); i++) {
+            
+        }
+        
         return sb.toString();
     }
     
 
     @Override
-    public List decode(List<String> lines) {
-        List<String> decodedLines = new ArrayList<String>();
-        String[] temps;
-        for (String l : lines) {
-            temps = l.split(colDelimiter);
-            for (int i = 0; i < temps.length; i++) {
-                decodedLines.add(temps[i]);
-            }
-        }
-        return decodedLines;
+    public List<Map<String, String>> decode(List<String> lines, boolean hasHeader) {
+        List<Map<String, String>> decodedData = new ArrayList<Map<String, String>>();
+        
+        
+        return decodedData;
     }
 
 

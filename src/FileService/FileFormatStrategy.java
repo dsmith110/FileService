@@ -4,7 +4,9 @@
  */
 package FileService;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,9 +16,9 @@ public interface FileFormatStrategy {
     public final String ROW_DELIMITER = "\n";
     public final int ZERO = 0;
     
-    public abstract String encode(List<String> objects);
+    public abstract List<Map<String, String>> decode(List<String> lines, boolean hasHeader);
     
-    public abstract List decode(List<String> lines);
+    public abstract String encode(List<LinkedHashMap<String, String>> lines, boolean hasHeader);
     
     public abstract void setColDelimiter(String delimiter);
     
