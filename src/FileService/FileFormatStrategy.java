@@ -14,9 +14,10 @@ import java.util.Map;
  */
 public interface FileFormatStrategy {
     public final String ROW_DELIMITER = "\n";
+    public final String DBL_QUOTE = "\"";
     public final int ZERO = 0;
     
-    public abstract List<Map<String, String>> decode(List<String> lines, boolean hasHeader);
+    public abstract List<LinkedHashMap<String, String>> decode(List<String> lines, boolean hasHeader);
     
     public abstract String encode(List<LinkedHashMap<String, String>> lines, boolean hasHeader);
     
