@@ -1,7 +1,6 @@
 package FileService;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  *
@@ -14,7 +13,7 @@ public interface FileWriterStrategy {
     
     public abstract boolean getAppend();
     
-    public abstract void setFilePath(String filePath);
+    public abstract void setFilePath(String filePath) throws InvalidFilePathException;
     
     public abstract String getFilePath();
 }

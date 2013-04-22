@@ -16,7 +16,7 @@ public class TextFileWriter implements FileWriterStrategy {
     private boolean append;
     private String filePath;
 
-    public TextFileWriter(boolean append, String filePath) {
+    public TextFileWriter(boolean append, String filePath) throws InvalidFilePathException {
         this.setAppend(append);
         this.setFilePath(filePath);
     }
@@ -24,13 +24,10 @@ public class TextFileWriter implements FileWriterStrategy {
     @Override
     public void writeFile(String encodedLine) throws IOException{
         PrintWriter out = new PrintWriter(
-                    new BufferedWriter(
-                    new FileWriter(file, append)));
-         
-            out.print(encodedLine);
+                new BufferedWriter(
+                new FileWriter(getFile(), isAppend())));
 
-            
-
+        out.print(encodedLine);
         out.close();
     }
 
@@ -41,18 +38,45 @@ public class TextFileWriter implements FileWriterStrategy {
 
     @Override
     public boolean getAppend() {
-        return append;
+        return isAppend();
     }
 
     @Override
-    public final void setFilePath(String filePath) {
-        file = new File(filePath);
+    public final void setFilePath(String filePath) throws InvalidFilePathException {
+        if(filePath == null || filePath.length() == 0) {
+            throw new InvalidFilePathException();
+        }
+        setFile(new File(filePath));
         this.filePath = filePath;
     }
 
     @Override
     public String getFilePath() {
         return filePath;
+    }
+
+    /**
+     * @return the file
+     */
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(File file) throws IllegalArgumentException {
+        if(file == null) {
+            throw new IllegalArgumentException();
+        }
+        this.file = file;
+    }
+
+    /**
+     * @return the append
+     */
+    public boolean isAppend() {
+        return append;
     }
     
 }

@@ -1,6 +1,7 @@
 package FileService;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -30,14 +31,22 @@ public class FileService {
         this.fileWriterFormat = fileWriterFormat;
     }
     
-    public void writeFile(List objects, boolean append) throws IOException {
-        getFileWriter().writeFile(getFileWriterFormat().encode(objects, append));
+    public void writeFile(List data) throws IOException {
+        fileWriter.writeFile(fileWriterFormat.encode(data));
     }
     
-    public List readFile(boolean append) throws IOException {
-        return getFileReaderFormat().decode(getFileReader().readFile(), append);
+    public List readFile() throws IOException {
+        return fileReaderFormat.decode(fileReader.readFile());
     }
-
+    
+    public String encode(List<LinkedHashMap<String, String>> data) throws IOException {
+        return fileWriterFormat.encode(data);
+    }
+    
+    public List<LinkedHashMap<String, String>> decode(List<String> data) {
+        return fileReaderFormat.decode(data);
+    }
+    
     public void setAppend(boolean append) {
         fileWriter.setAppend(append);
     }
@@ -45,6 +54,7 @@ public class FileService {
     public boolean getAppend() {
         return fileWriter.getAppend();
     }
+    
     /**
      * @return the fileReader
      */
