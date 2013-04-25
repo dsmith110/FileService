@@ -17,7 +17,5 @@ public interface FileFormatStrategy {
     
     public abstract String encode(List<LinkedHashMap<String, String>> lines);
     
-    public abstract void setColDelimiter(String delimiter);
     
-    public abstract String getColDelimiter();
 }

@@ -22,7 +22,10 @@ public class TextFileWriter implements FileWriterStrategy {
     }
     
     @Override
-    public void writeFile(String encodedLine) throws IOException{
+    public void writeFile(String encodedLine) throws IOException {
+        if(encodedLine == null || encodedLine.length() == 0) {
+            throw new IllegalArgumentException();
+        }
         PrintWriter out = new PrintWriter(
                 new BufferedWriter(
                 new FileWriter(getFile(), isAppend())));
@@ -33,6 +36,7 @@ public class TextFileWriter implements FileWriterStrategy {
 
     @Override
     public final void setAppend(boolean append) {
+        
         this.append = append;
     }
 

@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package FileService;
 
 import java.util.ArrayList;
@@ -8,34 +12,35 @@ import java.util.Set;
 
 /**
  *
- * @author Dan Smith
+ * @author dskrilla24
  */
-public class CSVFormatter implements FileFormatStrategy{
-    private String colDelimiter;
+public class CsvCommaFormat implements FileFormatStrategy {
+    private static final String COMMA = ",";
+    
     private boolean hasHeader;
 
-    public CSVFormatter(String colDelimiter, boolean hasHeader) {
-        this.colDelimiter = colDelimiter;
+    public CsvCommaFormat(boolean hasHeader) {
         this.hasHeader = hasHeader;
-        
     }
-
+    
+    
+    
     @Override
-    public String encode(List<LinkedHashMap<String, String>> data) {
+    public String encode(List<LinkedHashMap<String, String>> lines) {
         StringBuilder sb = new StringBuilder();
         
         boolean headerSet = false;
         Set<String> keys = null;
         
         if(hasHeader) {
-            keys = data.get(ZERO).keySet();
+            keys = lines.get(ZERO).keySet();
         }
 
-        for (int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < lines.size(); i++) {
             // Add header to CSV formatted string if required
             if (keys != null && !headerSet) {
                 for (String key : keys) {
-                    sb.append(DBL_QUOTE).append(key).append(DBL_QUOTE).append(colDelimiter);
+                    sb.append(DBL_QUOTE).append(key).append(DBL_QUOTE).append(COMMA);
                 }
                 // Delete last comma
                 sb.deleteCharAt(sb.length() - 1);
@@ -44,9 +49,9 @@ public class CSVFormatter implements FileFormatStrategy{
                 // Header already set
                 headerSet = true;
                 // Helper method to add map values
-                addData(data, i, sb);
+                addData(lines, i, sb);
             } else {
-                addData(data, i, sb);
+                addData(lines, i, sb);
             }
         }
 
@@ -69,7 +74,7 @@ public class CSVFormatter implements FileFormatStrategy{
 
         for (int recordNo = 0; recordNo < lines.size(); recordNo++) {
             // Splits the string and assigns it to values in array
-            String[] fields = lines.get(recordNo).split(colDelimiter);
+            String[] fields = lines.get(recordNo).split(COMMA);
 
             // Assign the header to headerFields array
             if (hasHeader && (recordNo == 0)) {
@@ -103,17 +108,6 @@ public class CSVFormatter implements FileFormatStrategy{
 
         return decodedData;
     }
-
-
-    @Override
-    public void setColDelimiter(String delimiter) {
-        this.colDelimiter = delimiter;
-    }
-
-    @Override
-    public String getColDelimiter() {
-        return colDelimiter;
-    }
     
     // Helper method to remove quotes
     private String removeQuotes(String line) {
@@ -125,12 +119,12 @@ public class CSVFormatter implements FileFormatStrategy{
         Collection<String> valueCol = data.get(recordNum).values();
         for (String value : valueCol) {
             sb.append(DBL_QUOTE).append(value).append(DBL_QUOTE);
-            sb.append(colDelimiter);
+            sb.append(COMMA);
         }
         
         sb.deleteCharAt(sb.length() - 1);
         sb.append(ROW_DELIMITER);
     }
-    
+
     
 }

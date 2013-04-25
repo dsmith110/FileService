@@ -31,11 +31,11 @@ public class FileService {
         this.fileWriterFormat = fileWriterFormat;
     }
     
-    public void writeFile(List data) throws IOException {
+    public void writeFile(List<LinkedHashMap<String, String>> data) throws IOException {
         fileWriter.writeFile(fileWriterFormat.encode(data));
     }
     
-    public List readFile() throws IOException {
+    public List<LinkedHashMap<String, String>> readFile() throws IOException {
         return fileReaderFormat.decode(fileReader.readFile());
     }
     
@@ -43,8 +43,12 @@ public class FileService {
         return fileWriterFormat.encode(data);
     }
     
-    public List<LinkedHashMap<String, String>> decode(List<String> data) {
-        return fileReaderFormat.decode(data);
+    public List<LinkedHashMap<String, String>> decode(List<String> lines) {
+        return fileReaderFormat.decode(lines);
+    }
+    
+    public List<String> read() throws IOException {
+        return fileReader.readFile();
     }
     
     public void setAppend(boolean append) {

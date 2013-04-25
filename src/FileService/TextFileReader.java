@@ -1,9 +1,11 @@
 package FileService;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -13,9 +15,8 @@ import java.util.List;
 public class TextFileReader implements FileReaderStrategy {
     private String filePath;
 
-
-    public TextFileReader(String filePath) {
-        this.filePath = filePath;
+    public TextFileReader(String filePath) throws InvalidFilePathException {
+        this.setFilePath(filePath);
     }
     
     @Override
@@ -43,8 +44,11 @@ public class TextFileReader implements FileReaderStrategy {
     }
 
     @Override
-    public void setFilePath(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public final void setFilePath(String filePath) throws InvalidFilePathException {
+        if(filePath == null || filePath.length() == 0) {
+            throw new InvalidFilePathException();
+        }
+        this.filePath = filePath;
     }
 
     @Override
@@ -52,4 +56,28 @@ public class TextFileReader implements FileReaderStrategy {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    
+    public static void main(String[] args) {
+        String filePath = "src" + File.separatorChar + "Files"
+                + File.separatorChar + "myData.txt";
+        try {
+            TextFileReader tr = new TextFileReader(filePath);
+            List<String> temp = new ArrayList<>();
+            temp = tr.readFile();
+            for (String string : temp) {
+                System.out.println(string);
+            }
+            
+            List<LinkedHashMap<String, String>> temp1 = new ArrayList<>();
+            CsvCommaFormat cf = new CsvCommaFormat(true);
+            temp1 = cf.decode(temp);
+            System.out.println(temp1);
+            
+        } catch(InvalidFilePathException ife) {
+            
+        } catch(IOException ioe) {
+            
+        }
+        
+    }
 }

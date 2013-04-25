@@ -10,7 +10,7 @@ import java.util.List;
 public interface FileReaderStrategy {
     public abstract List<String> readFile() throws IOException;
     
-    public abstract void setFilePath(String filePath);
+    public abstract void setFilePath(String filePath) throws InvalidFilePathException;
     
     public abstract String getFilePath();
 }
