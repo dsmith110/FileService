@@ -33,7 +33,7 @@ public class Startup {
         try {
             FileService fs = new FileService(
                 new TextFileReader(filePath),
-                new TextFileWriter(true, filePath),
+                new TextFileWriter(false, filePath),
                 new CsvCommaFormat(true), 
                 new CsvCommaFormat(true));
             

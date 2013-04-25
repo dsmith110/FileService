@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author dskrilla24
  */
-public class CsvCommaFormat implements FileFormatStrategy {
+public class CsvCommaFormat implements FileFormatStrategy<LinkedHashMap<String, String>, String> {
     private static final String COMMA = ",";
     
     private boolean hasHeader;
