@@ -1,6 +1,5 @@
 package FileService;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public interface FileFormatStrategy <T, E>{
     public final String EMPTY_STRING = "";
     public final int ZERO = 0;
     
-    public abstract List<T> decode(List<E> lines);
+    public abstract List<T> decode(E lines);
     
     public abstract String encode(List<T> lines);
     

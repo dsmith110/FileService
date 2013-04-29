@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package FileService;
 
 import java.util.ArrayList;
@@ -12,18 +8,16 @@ import java.util.Set;
 
 /**
  *
- * @author dskrilla24
+ * @author Dan Smith
  */
-public class CsvCommaFormat implements FileFormatStrategy<LinkedHashMap<String, String>, List<String>> {
-    private static final String COMMA = ",";
+public class CsvTabFormat implements FileFormatStrategy<LinkedHashMap<String, String>, List<String>> {
+    private static final String TAB = "\t";
     
     private boolean hasHeader;
 
-    public CsvCommaFormat(boolean hasHeader) {
+    public CsvTabFormat(boolean hasHeader) {
         this.hasHeader = hasHeader;
     }
-    
-    
     
     @Override
     public String encode(List<LinkedHashMap<String, String>> lines) {
@@ -40,7 +34,7 @@ public class CsvCommaFormat implements FileFormatStrategy<LinkedHashMap<String, 
             // Add header to CSV formatted string if required
             if (keys != null && !headerSet) {
                 for (String key : keys) {
-                    sb.append(DBL_QUOTE).append(key).append(DBL_QUOTE).append(COMMA);
+                    sb.append(DBL_QUOTE).append(key).append(DBL_QUOTE).append(TAB);
                 }
                 // Delete last comma
                 sb.deleteCharAt(sb.length() - 1);
@@ -74,7 +68,7 @@ public class CsvCommaFormat implements FileFormatStrategy<LinkedHashMap<String, 
 
         for (int recordNo = 0; recordNo < lines.size(); recordNo++) {
             // Splits the string and assigns it to values in array
-            String[] fields = lines.get(recordNo).split(COMMA);
+            String[] fields = lines.get(recordNo).split(TAB);
 
             // Assign the header to headerFields array
             if (hasHeader && (recordNo == 0)) {
@@ -121,12 +115,11 @@ public class CsvCommaFormat implements FileFormatStrategy<LinkedHashMap<String, 
         Collection<String> valueCol = data.get(recordNum).values();
         for (String value : valueCol) {
             sb.append(DBL_QUOTE).append(value).append(DBL_QUOTE);
-            sb.append(COMMA);
+            sb.append(TAB);
         }
         
         sb.deleteCharAt(sb.length() - 1);
         sb.append(ROW_DELIMITER);
     }
-
     
 }
